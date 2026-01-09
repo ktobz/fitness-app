@@ -5,6 +5,7 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import WorkoutCreator from "./pages/WorkoutCreator";
 import PerformanceLab from "./pages/PerformanceLab";
+import PerformanceReport from "./pages/PerformanceReport";
 import WorkoutLibrary from "./pages/WorkoutLibrary";
 import Programs from "./pages/Programs";
 import Coaching from "./pages/Coaching";
@@ -32,6 +33,7 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/create-workout" element={<WorkoutCreator />} />
         <Route path="/performance-lab" element={<PerformanceLab />} />
+        <Route path="/performance-report" element={<PerformanceReport />} />
         <Route path="/workouts" element={<WorkoutLibrary />} />
         {/* Product Routes */}
         <Route path="/programs" element={<Programs />} />

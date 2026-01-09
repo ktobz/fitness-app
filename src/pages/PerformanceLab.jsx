@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Camera, RefreshCcw, CheckCircle2, AlertTriangle, Play, ChevronLeft, ShieldCheck, Zap } from "lucide-react";
+import { Camera, RefreshCcw, CheckCircle2, AlertTriangle, Play, ChevronLeft, ShieldCheck, Zap, BarChart3, Activity } from "lucide-react";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
 
@@ -32,14 +32,20 @@ export default function PerformanceLab() {
             {/* Header */}
             <header className="border-b border-white/5 bg-slate-900/50 backdrop-blur-xl sticky top-0 z-50">
                 <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-                    <Link to="/dashboard" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors font-bold">
-                        <ChevronLeft size={20} />
-                        <span>Dashboard</span>
-                    </Link>
+                    <div className="flex items-center gap-4">
+                        <Link to="/" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors font-bold">
+                            <ChevronLeft size={20} />
+                            <span>Home</span>
+                        </Link>
+                    </div>
                     <div className="flex items-center gap-3">
                         <ShieldCheck className="text-primary" size={20} />
-                        <span className="text-xs font-black uppercase tracking-[0.2em]">TOBA-FIT Performance Advisor</span>
+                        <span className="text-xs font-black uppercase tracking-[0.2em]">TOBA-FIT Performance Lab</span>
                     </div>
+                    <Link to="/performance-report" className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-bold">
+                        <BarChart3 size={20} />
+                        <span className="hidden sm:inline">View Report</span>
+                    </Link>
                 </div>
             </header>
 

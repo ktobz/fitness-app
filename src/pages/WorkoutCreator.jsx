@@ -13,8 +13,24 @@ export default function WorkoutCreator() {
         equipment: "Full Gym",
         notes: "",
         exercises: [{ name: "", sets: "", reps: "", weight: "" }],
-        image: null
+        image: null,
+        imagePreview: null
     });
+
+    const handleImageUpload = (e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setWorkout({
+                    ...workout,
+                    image: file,
+                    imagePreview: reader.result
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     const addExercise = () => {
         setWorkout({
@@ -137,9 +153,24 @@ export default function WorkoutCreator() {
                             />
                         </div>
 
-                        <div className="bg-white border-2 border-dashed border-slate-200 rounded-[32px] p-8 flex flex-col items-center justify-center text-slate-400 hover:border-primary transition-colors cursor-pointer group">
-                            <ImageIcon size={32} className="mb-4 group-hover:text-primary transition-colors" />
-                            <p className="text-xs font-black uppercase tracking-widest">Attach Image</p>
+                        <div className="bg-white border-2 border-dashed border-slate-200 rounded-[32px] p-8 flex flex-col items-center justify-center text-slate-400 hover:border-primary transition-colors cursor-pointer group relative overflow-hidden">
+                            <input 
+                                type="file" 
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                                className="absolute inset-0 opacity-0 cursor-pointer"
+                            />
+                            {workout.imagePreview ? (
+                                <>
+                                    <img src={workout.imagePreview} alt="Preview" className="w-full h-32 object-cover rounded-lg mb-2" />
+                                    <p className="text-xs font-black uppercase tracking-widest text-primary">Image Added ✓</p>
+                                </>
+                            ) : (
+                                <>
+                                    <ImageIcon size={32} className="mb-4 group-hover:text-primary transition-colors" />
+                                    <p className="text-xs font-black uppercase tracking-widest">Attach Image</p>
+                                </>
+                            )}
                         </div>
                     </div>
 
