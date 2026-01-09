@@ -18,6 +18,9 @@ import Help from "./pages/Help";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Safety from "./pages/Safety";
+import PersonalizedCoaching from "./pages/PersonalizedCoaching";
+import CommunityPage from "./pages/Community";
+import FindSquads from "./pages/FindSquads";
 
 export default function App() {
   return (
@@ -33,9 +36,12 @@ export default function App() {
         {/* Product Routes */}
         <Route path="/programs" element={<Programs />} />
         <Route path="/coaching" element={<Coaching />} />
+        <Route path="/personalized-coaching" element={<PersonalizedCoaching />} />
         <Route path="/nutrition" element={<Nutrition />} />
         <Route path="/wearables" element={<Wearables />} />
         {/* Community Routes */}
+        <Route path="/community" element={<CommunityPage />} />
+        <Route path="/find-squads" element={<FindSquads />} />
         <Route path="/discord" element={<Discord />} />
         <Route path="/teams" element={<Teams />} />
         <Route path="/challenges" element={<Challenges />} />

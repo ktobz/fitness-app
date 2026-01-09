@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Play, Zap, Users, Dumbbell, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import Button from "./Button";
 
 export default function Hero() {
@@ -15,7 +16,9 @@ export default function Hero() {
             subtitle: "Professional Training",
             description: "Professional training, redefined. Built for athletes by athletes. Join a community of high achievers and unlock your full physical potential.",
             primaryCTA: "Start Training Free",
+            primaryLink: "/programs",
             secondaryCTA: "Watch Demo",
+            secondaryLink: "/workouts",
             icon: Dumbbell,
             stats: [
                 { label: "Elite Coaches", value: "50+" },
@@ -31,7 +34,9 @@ export default function Hero() {
             subtitle: "The Lab",
             description: "Track every rep, analyze your form, and push past plateaus with our cutting-edge Performance Lab. Real-time data for real-world results.",
             primaryCTA: "Explore the Lab",
+            primaryLink: "/performance-lab",
             secondaryCTA: "Learn More",
+            secondaryLink: "/personalized-coaching",
             icon: Zap,
             stats: [
                 { label: "Data Points", value: "1M+" },
@@ -47,7 +52,9 @@ export default function Hero() {
             subtitle: "Join the Tribe",
             description: "Fitness is better together. Compete in global leaderboards, join local squads, and share your progress with a community that inspires.",
             primaryCTA: "Join Community",
+            primaryLink: "/community",
             secondaryCTA: "Find Squads",
+            secondaryLink: "/find-squads",
             icon: Users,
             stats: [
                 { label: "Active Squads", value: "5k+" },
@@ -85,10 +92,10 @@ export default function Hero() {
         setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
     };
 
-    useEffect(() => {
-        const timer = setInterval(nextSlide, 8000);
-        return () => clearInterval(timer);
-    }, []);
+    // useEffect(() => {
+    //     const timer = setInterval(nextSlide, 8000);
+    //     return () => clearInterval(timer);
+    // }, []);
 
     const slide = slides[currentSlide];
 
@@ -141,12 +148,16 @@ export default function Hero() {
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4">
-                                <Button href="#workouts" size="lg" variant="primary" className="shadow-2xl">
-                                    {slide.primaryCTA} <ArrowRight className="ml-2 w-5 h-5" />
-                                </Button>
-                                <Button href="#stats" size="lg" variant="secondary" className="group">
-                                    <Play className="mr-2 w-5 h-5 fill-slate-950" /> {slide.secondaryCTA}
-                                </Button>
+                                <Link to={slide.primaryLink}>
+                                    <Button size="lg" variant="primary" className="shadow-2xl w-full">
+                                        {slide.primaryCTA} <ArrowRight className="ml-2 w-5 h-5" />
+                                    </Button>
+                                </Link>
+                                <Link to={slide.secondaryLink}>
+                                    <Button size="lg" variant="secondary" className="group w-full">
+                                        <Play className="mr-2 w-5 h-5 fill-slate-950" /> {slide.secondaryCTA}
+                                    </Button>
+                                </Link>
                             </div>
 
                             <div className="mt-12 flex flex-wrap items-center gap-8 text-slate-500">

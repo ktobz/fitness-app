@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Star, ArrowUpRight, MessageSquare } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const testimonials = [
     {
@@ -62,9 +63,8 @@ export default function Community() {
 
                 <div className="grid lg:grid-cols-3 gap-8">
                     {testimonials.map((t, i) => (
-                        <motion.a
+                        <motion.div
                             key={i}
-                            href={`#testimonial-${t.id}`}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -91,12 +91,12 @@ export default function Community() {
                                 <span className="text-xs font-bold text-primary uppercase tracking-widest">Share Achievement</span>
                                 <ArrowUpRight className="w-5 h-5 text-primary" />
                             </div>
-                        </motion.a>
+                        </motion.div>
                     ))}
                 </div>
 
                 <div className="mt-24 text-center">
-                    <a href="#join-now" className="inline-flex items-center gap-4 group">
+                    <Link to="/discord" className="inline-flex items-center gap-4 group">
                         <div className="w-16 h-16 rounded-3xl bg-slate-950 flex items-center justify-center text-white group-hover:bg-primary transition-colors shadow-2xl">
                             <MessageSquare className="w-7 h-7" />
                         </div>
@@ -104,7 +104,7 @@ export default function Community() {
                             <p className="text-xl font-black text-slate-950">Join the Discord</p>
                             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-primary transition-colors">Connect with the team</p>
                         </div>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </section>
