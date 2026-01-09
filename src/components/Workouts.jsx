@@ -1,68 +1,114 @@
 import { motion } from "framer-motion";
-import { Dumbbell, HeartPulse, Activity, Flame } from "lucide-react";
+import { Dumbbell, HeartPulse, Activity, Flame, ArrowUpRight } from "lucide-react";
+import TodayActivity from "./TodayActivity";
 
 const workouts = [
     {
         title: "Strength Training",
-        desc: "Build muscle and increase power with our guided weights program.",
+        desc: "Build professional-grade muscle and functional power with guided weights.",
         icon: Dumbbell,
-        color: "from-blue-500 to-indigo-500",
+        color: "from-blue-600 to-indigo-600",
+        stats: "45 mins • Intermediate",
+        href: "#strength"
     },
     {
         title: "HIIT Cardio",
-        desc: "Burn fat and improve endurance with high-intensity intervals.",
+        desc: "Maximize fat loss and explosive endurance with high-intensity intervals.",
         icon: Flame,
-        color: "from-orange-500 to-red-500",
+        color: "from-orange-500 to-rose-500",
+        stats: "25 mins • Advanced",
+        href: "#hiit"
     },
     {
         title: "Yoga Flow",
-        desc: "Enhance flexibility and find your balance with daily flow sessions.",
+        desc: "Recover faster and find athletic balance with precision flow sessions.",
         icon: Activity,
-        color: "from-green-500 to-emerald-500",
+        color: "from-emerald-500 to-teal-500",
+        stats: "30 mins • All Levels",
+        href: "#yoga"
     },
     {
         title: "Endurance Run",
-        desc: "Train for your first 5K or marathon with audio-guided runs.",
+        desc: "Scientific pacing for your first 5K or elite performance marathons.",
         icon: HeartPulse,
-        color: "from-pink-500 to-rose-500",
+        color: "from-pink-500 to-purple-600",
+        stats: "60 mins • Advanced",
+        href: "#running"
     },
 ];
 
 export default function Workouts() {
     return (
-        <section id="workouts" className="py-20 px-6 bg-dark/50">
+        <section id="workouts" className="py-32 px-6 bg-white relative">
             <div className="container mx-auto">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center mb-16"
-                >
-                    <h2 className="text-3xl md:text-5xl font-bold mb-4">Explore Workouts</h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto">
-                        From heavy lifting to mindful movement, we have the perfect program for your goals.
-                    </p>
-                </motion.div>
+                <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="max-w-2xl"
+                    >
+                        <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-6 text-slate-950">
+                            Professional <br />
+                            <span className="text-primary italic">Training Programs</span>
+                        </h2>
+                        <p className="text-slate-500 text-xl font-medium leading-relaxed">
+                            Elite-level programs designed by world-class athletes and sports scientists.
+                            Choose your path and start your transformation.
+                        </p>
+                    </motion.div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="hidden md:block"
+                    >
+                        <a href="#all-programs" className="group flex items-center gap-3 text-lg font-black text-slate-950 hover:text-primary transition-colors">
+                            View All Programs
+                            <div className="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center group-hover:border-primary group-hover:bg-primary group-hover:text-white transition-all">
+                                <ArrowUpRight className="w-6 h-6" />
+                            </div>
+                        </a>
+                    </motion.div>
+                </div>
+
+                <TodayActivity />
+
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {workouts.map((workout, index) => (
-                        <motion.div
+                        <motion.a
                             key={index}
+                            href={workout.href}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            whileHover={{ y: -10 }}
-                            className="bg-white/5 border border-white/10 rounded-3xl p-6 hover:bg-white/10 transition-colors cursor-pointer group"
+                            whileHover={{ y: -12 }}
+                            className="bg-slate-50 border border-slate-100 rounded-[32px] p-8 hover:bg-white hover:border-slate-200 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.08)] transition-all cursor-pointer group flex flex-col h-full"
                         >
-                            <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${workout.color} flex items-center justify-center mb-6 shadow-lg group-hover:shadow-xl transition-shadow`}>
-                                <workout.icon className="text-white w-7 h-7" />
+                            <div className={`w-16 h-16 rounded-2xl bg-linear-to-br ${workout.color} flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform`}>
+                                <workout.icon className="text-white w-8 h-8" />
                             </div>
-                            <h3 className="text-xl font-bold mb-2">{workout.title}</h3>
-                            <p className="text-gray-400 text-sm leading-relaxed">{workout.desc}</p>
-                        </motion.div>
+
+                            <div className="flex-1">
+                                <h3 className="text-2xl font-black mb-3 text-slate-950 group-hover:text-primary transition-colors">{workout.title}</h3>
+                                <p className="text-slate-500 font-medium mb-6 leading-relaxed">{workout.desc}</p>
+                            </div>
+
+                            <div className="pt-6 border-t border-slate-200/60 flex items-center justify-between mt-auto">
+                                <span className="text-xs font-bold uppercase tracking-widest text-slate-400">{workout.stats}</span>
+                                <ArrowUpRight className="w-5 h-5 text-slate-300 group-hover:text-primary transition-colors" />
+                            </div>
+                        </motion.a>
                     ))}
+                </div>
+
+                <div className="mt-16 md:hidden text-center">
+                    <a href="#all-programs" className="inline-flex items-center gap-2 text-lg font-black text-slate-950">
+                        View All Programs <ArrowUpRight className="w-5 h-5 text-primary" />
+                    </a>
                 </div>
             </div>
         </section>

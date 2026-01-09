@@ -1,0 +1,734 @@
+{
+  "workouts": [
+    {
+      "id": 1,
+      "title": "Initial Strength Session",
+      "type": "Strength",
+      "difficulty": "Beginner",
+      "equipment": "Dumbbells",
+      "notes": "Focused on slow control and form perfection.",
+      "exercises": [
+        {
+          "name": "Pushups",
+          "sets": "3",
+          "reps": "12",
+          "weight": "BW"
+        },
+        {
+          "name": "Goblet Squats",
+          "sets": "3",
+          "reps": "10",
+          "weight": "12k"
+        }
+      ],
+      "date": "01/06/2026"
+    }
+  ],
+  "stats": {
+    "totalWorkouts": 1,
+    "avgTime": "35m",
+    "caloriesBurned": "250"
+  },
+  "library": [
+    {
+      "id": 1,
+      "title": "Elite Hypertrophy",
+      "category": "Strength",
+      "duration": "45 min",
+      "calories": "450",
+      "instructor": "Coach TOBA",
+      "difficulty": "Advanced",
+      "videoUrl": "https://www.youtube.com/embed/U9ENCvFf9yQ",
+      "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80",
+      "rating": 4.9,
+      "instructions": [
+        "Warm up with 5 minutes of dynamic stretching.",
+        "Focus on 3-second eccentric phase for every rep.",
+        "Rest 60-90 seconds between sets.",
+        "Hydrate consistently throughout the session."
+      ],
+      "exercises": [
+        {
+          "name": "Bench Press",
+          "sets": 4,
+          "reps": "8-12"
+        },
+        {
+          "name": "Incline DB Flys",
+          "sets": 3,
+          "reps": "12-15"
+        },
+        {
+          "name": "Weighted Pullups",
+          "sets": 4,
+          "reps": "6-10"
+        },
+        {
+          "name": "Seated Cable Rows",
+          "sets": 3,
+          "reps": "12"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Metabolic HIIT Blast",
+      "category": "HIIT",
+      "duration": "25 min",
+      "calories": "380",
+      "instructor": "Sarah J.",
+      "difficulty": "Intermediate",
+      "videoUrl": "https://www.youtube.com/embed/ml6cT4AZdqI",
+      "image": "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&q=80",
+      "rating": 4.8,
+      "instructions": [
+        "High intensity work for 45 seconds, followed by 15 seconds rest.",
+        "Keep your heart rate in the 80-90% range.",
+        "Repeat the circuit 4 times.",
+        "Cool down with light walking."
+      ],
+      "exercises": [
+        {
+          "name": "Burpees",
+          "sets": 4,
+          "reps": "45s"
+        },
+        {
+          "name": "Mountain Climbers",
+          "sets": 4,
+          "reps": "45s"
+        },
+        {
+          "name": "Jump Squats",
+          "sets": 4,
+          "reps": "45s"
+        },
+        {
+          "name": "Plank Jacks",
+          "sets": 4,
+          "reps": "45s"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Gravity Mastery I",
+      "category": "Calisthenics",
+      "duration": "40 min",
+      "calories": "300",
+      "instructor": "Coach TOBA",
+      "difficulty": "Intermediate",
+      "videoUrl": "https://www.youtube.com/embed/mRjgNC0j1Sg",
+      "image": "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&q=80",
+      "rating": 5,
+      "instructions": [
+        "Focus on full range of motion (scapular protraction/retraction).",
+        "Engage core to maintain a hollow body position.",
+        "Controlled tempo: 2s up, 1s hold, 2s down.",
+        "Quality over quantity."
+      ],
+      "exercises": [
+        {
+          "name": "Muscle Up Progressions",
+          "sets": 5,
+          "reps": "5"
+        },
+        {
+          "name": "Dips on Parallel Bars",
+          "sets": 4,
+          "reps": "12"
+        },
+        {
+          "name": "L-Sit Hold",
+          "sets": 3,
+          "reps": "20s"
+        },
+        {
+          "name": "Archer Pushups",
+          "sets": 3,
+          "reps": "8 each side"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Upper Body Shred",
+      "category": "Strength",
+      "duration": "40 min",
+      "calories": "400",
+      "instructor": "Coach TOBA",
+      "difficulty": "Beginner",
+      "videoUrl": "https://www.youtube.com/embed/6TMGidMOn5U",
+      "image": "https://images.unsplash.com/photo-1581009146145-b5ef03a7403f?auto=format&fit=crop&q=80",
+      "rating": 4.7,
+      "instructions": [
+        "Maintain flat back against the bench.",
+        "Exhale on the concentric phase.",
+        "Keep elbows tucked at 45 degrees.",
+        "Squeeze the target muscle at the peak."
+      ],
+      "exercises": [
+        {
+          "name": "Overhead Press",
+          "sets": 4,
+          "reps": "10"
+        },
+        {
+          "name": "Lateral Raises",
+          "sets": 3,
+          "reps": "15"
+        },
+        {
+          "name": "Tricep Pushdowns",
+          "sets": 3,
+          "reps": "12"
+        },
+        {
+          "name": "Bicep Curls",
+          "sets": 3,
+          "reps": "12"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Functional Leg Day",
+      "category": "Strength",
+      "duration": "55 min",
+      "calories": "600",
+      "instructor": "Marcus T.",
+      "difficulty": "Advanced",
+      "videoUrl": "https://www.youtube.com/embed/9o0T-f0N0lI",
+      "image": "https://images.unsplash.com/photo-1434608519344-49d7768f9b43?auto=format&fit=crop&q=80",
+      "rating": 4.9,
+      "instructions": [
+        "Drive through your heels.",
+        "Maintain neutral spine during deadlifts.",
+        "Brace core before every lift.",
+        "Focus on unilateral balance."
+      ],
+      "exercises": [
+        {
+          "name": "Back Squats",
+          "sets": 5,
+          "reps": "5"
+        },
+        {
+          "name": "Romanian Deadlifts",
+          "sets": 4,
+          "reps": "10"
+        },
+        {
+          "name": "Bulgarian Split Squats",
+          "sets": 3,
+          "reps": "8 each"
+        },
+        {
+          "name": "Calf Raises",
+          "sets": 4,
+          "reps": "20"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Core Integrity",
+      "category": "Abs",
+      "duration": "15 min",
+      "calories": "150",
+      "instructor": "Sarah J.",
+      "difficulty": "Beginner",
+      "videoUrl": "https://www.youtube.com/embed/dJlFmxiL11s",
+      "image": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&q=80",
+      "rating": 4.8,
+      "instructions": [
+        "Don't pull on your neck.",
+        "Press lower back into the floor.",
+        "Controlled breathing with every contraction.",
+        "Keep movements slow."
+      ],
+      "exercises": [
+        {
+          "name": "Hanging Leg Raises",
+          "sets": 3,
+          "reps": "12"
+        },
+        {
+          "name": "Russian Twists",
+          "sets": 3,
+          "reps": "30s"
+        },
+        {
+          "name": "Dead Bugs",
+          "sets": 3,
+          "reps": "10 each"
+        },
+        {
+          "name": "Plank",
+          "sets": 3,
+          "reps": "60s"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Boxing Fundamentals",
+      "category": "Cardio",
+      "duration": "30 min",
+      "calories": "350",
+      "instructor": "Elena R.",
+      "difficulty": "Intermediate",
+      "videoUrl": "https://www.youtube.com/embed/MUPoTU__vD0",
+      "image": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&q=80",
+      "rating": 4.6,
+      "instructions": [
+        "Stay light on your feet.",
+        "Snap your punches.",
+        "Rotate your hips for power.",
+        "Keep your hands up."
+      ],
+      "exercises": [
+        {
+          "name": "Shadow Boxing",
+          "sets": 5,
+          "reps": "3m"
+        },
+        {
+          "name": "Heavy Bag Work",
+          "sets": 3,
+          "reps": "3m"
+        },
+        {
+          "name": "Double End Bag",
+          "sets": 2,
+          "reps": "3m"
+        },
+        {
+          "name": "Slip Drill",
+          "sets": 3,
+          "reps": "2m"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Full Body Mobility",
+      "category": "Recovery",
+      "duration": "20 min",
+      "calories": "100",
+      "instructor": "Coach TOBA",
+      "difficulty": "Beginner",
+      "videoUrl": "https://www.youtube.com/embed/_G3PizC467E",
+      "image": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80",
+      "rating": 4.9,
+      "instructions": [
+        "Hold each stretch for 30 seconds.",
+        "Breathe deeply into tight areas.",
+        "Move through a comfortable range.",
+        "Relax your jaw and shoulders."
+      ],
+      "exercises": [
+        {
+          "name": "World's Greatest Stretch",
+          "sets": 2,
+          "reps": "5 each"
+        },
+        {
+          "name": "90/90 Hip Switch",
+          "sets": 2,
+          "reps": "10 each"
+        },
+        {
+          "name": "Cat-Cow",
+          "sets": 2,
+          "reps": "15"
+        },
+        {
+          "name": "Shoulder Pass-throughs",
+          "sets": 2,
+          "reps": "12"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Iron Pumping HIIT",
+      "category": "HIIT",
+      "duration": "35 min",
+      "calories": "420",
+      "instructor": "Marcus T.",
+      "difficulty": "Advanced",
+      "videoUrl": "https://www.youtube.com/embed/2_e4fE1lGIs",
+      "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80",
+      "rating": 4.7,
+      "instructions": [
+        "Combine explosive lifts with high cardio.",
+        "Rest minimal between exercises.",
+        "Focus on power and speed.",
+        "Warm up thoroughly."
+      ],
+      "exercises": [
+        {
+          "name": "KB Swings",
+          "sets": 5,
+          "reps": "20"
+        },
+        {
+          "name": "Thrusts",
+          "sets": 5,
+          "reps": "12"
+        },
+        {
+          "name": "Renegade Rows",
+          "sets": 5,
+          "reps": "10 each"
+        },
+        {
+          "name": "Battle Ropes",
+          "sets": 5,
+          "reps": "30s"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Morning Awakening",
+      "category": "Yoga",
+      "duration": "15 min",
+      "calories": "80",
+      "instructor": "Elena R.",
+      "difficulty": "Beginner",
+      "videoUrl": "https://www.youtube.com/embed/406D2K4X0bM",
+      "image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80",
+      "rating": 5,
+      "instructions": [
+        "Gentle flows to start the day.",
+        "Focus on nasal breathing.",
+        "Set an intention for your practice.",
+        "Connect breath with movement."
+      ],
+      "exercises": [
+        {
+          "name": "Sun Salutations",
+          "sets": 3,
+          "reps": "5 rounds"
+        },
+        {
+          "name": "Warrior I & II",
+          "sets": 1,
+          "reps": "hold 5 breaths"
+        },
+        {
+          "name": "Downward Dog",
+          "sets": 1,
+          "reps": "hold 10 breaths"
+        },
+        {
+          "name": "Child's Pose",
+          "sets": 1,
+          "reps": "60s"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "Absolute Calisthenics",
+      "category": "Calisthenics",
+      "duration": "50 min",
+      "calories": "350",
+      "instructor": "Coach TOBA",
+      "difficulty": "Advanced",
+      "videoUrl": "https://www.youtube.com/embed/Lw99rSId_eE",
+      "image": "https://images.unsplash.com/photo-1599058917232-d750c82a70f9?auto=format&fit=crop&q=80",
+      "rating": 4.9,
+      "instructions": [
+        "Advanced static holds and explosive movements.",
+        "Keep perfect form; stop if form degrades.",
+        "Rest 2-3 minutes between hard sets.",
+        "Use chalk for grip strength."
+      ],
+      "exercises": [
+        {
+          "name": "Front Lever Progressions",
+          "sets": 4,
+          "reps": "hold 10s"
+        },
+        {
+          "name": "Handstand Pushups",
+          "sets": 3,
+          "reps": "8"
+        },
+        {
+          "name": "Planched Leans",
+          "sets": 4,
+          "reps": "30s"
+        },
+        {
+          "name": "One Arm Pushup Prep",
+          "sets": 3,
+          "reps": "5 each"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Marathon Pace Prep",
+      "category": "Cardio",
+      "duration": "60 min",
+      "calories": "700",
+      "instructor": "Elena R.",
+      "difficulty": "Intermediate",
+      "videoUrl": "https://www.youtube.com/embed/8-9m2iJ-J7s",
+      "image": "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&q=80",
+      "rating": 4.7,
+      "instructions": [
+        "Maintain a steady Zone 2 heart rate.",
+        "Focus on foot strike and posture.",
+        "Build aerobic base.",
+        "Stay hydrated."
+      ],
+      "exercises": [
+        {
+          "name": "Steady State Run",
+          "sets": 1,
+          "reps": "50 min"
+        },
+        {
+          "name": "Stride Intervals",
+          "sets": 5,
+          "reps": "100m"
+        },
+        {
+          "name": "Cool Down Walk",
+          "sets": 1,
+          "reps": "5m"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Powerlifting Pillars",
+      "category": "Strength",
+      "duration": "65 min",
+      "calories": "400",
+      "instructor": "Marcus T.",
+      "difficulty": "Intermediate",
+      "videoUrl": "https://www.youtube.com/embed/XqC957zW2i0",
+      "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80",
+      "rating": 4.5,
+      "instructions": [
+        "Big three focus: Squat, Bench, Deadlift.",
+        "Low reps, high intensity (80%+ 1RM).",
+        "Full rest periods (3-5 minutes).",
+        "Use a weight belt for top sets."
+      ],
+      "exercises": [
+        {
+          "name": "Barbell Squats",
+          "sets": 5,
+          "reps": "3"
+        },
+        {
+          "name": "Bench Press",
+          "sets": 5,
+          "reps": "3"
+        },
+        {
+          "name": "Conventional Deadlift",
+          "sets": 3,
+          "reps": "5"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "title": "Jump Rope Masterclass",
+      "category": "Cardio",
+      "duration": "20 min",
+      "calories": "300",
+      "instructor": "Sarah J.",
+      "difficulty": "Beginner",
+      "videoUrl": "https://www.youtube.com/embed/1BZM2Vre5oc",
+      "image": "https://images.unsplash.com/photo-1590502160462-0994f9104f47?auto=format&fit=crop&q=80",
+      "rating": 4.8,
+      "instructions": [
+        "Stay on balls of your feet.",
+        "Small circular wrist movements.",
+        "Jump only 1-2 inches off ground.",
+        "Relax shoulders."
+      ],
+      "exercises": [
+        {
+          "name": "Basic Bounce",
+          "sets": 5,
+          "reps": "2m"
+        },
+        {
+          "name": "Alternate Foot Step",
+          "sets": 3,
+          "reps": "2m"
+        },
+        {
+          "name": "Double Unders Prep",
+          "sets": 3,
+          "reps": "1m"
+        },
+        {
+          "name": "Boxer Step",
+          "sets": 3,
+          "reps": "2m"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "title": "Bodyweight Burn 500",
+      "category": "Calisthenics",
+      "duration": "35 min",
+      "calories": "500",
+      "instructor": "Coach TOBA",
+      "difficulty": "Advanced",
+      "videoUrl": "https://www.youtube.com/embed/VC8XneV3xP8",
+      "image": "https://images.unsplash.com/photo-1517130595121-699cc2f6a500?auto=format&fit=crop&q=80",
+      "rating": 4.9,
+      "instructions": [
+        "500 repetitions total.",
+        "Move as fast as possible with good form.",
+        "Time yourself and try to beat it next time.",
+        "Minimal rest between exercises."
+      ],
+      "exercises": [
+        {
+          "name": "Pushups",
+          "sets": 1,
+          "reps": "100"
+        },
+        {
+          "name": "Air Squats",
+          "sets": 1,
+          "reps": "150"
+        },
+        {
+          "name": "Lunge Jumps",
+          "sets": 1,
+          "reps": "100"
+        },
+        {
+          "name": "Burpees",
+          "sets": 1,
+          "reps": "50"
+        },
+        {
+          "name": "Situps",
+          "sets": 1,
+          "reps": "100"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "title": "Starting Strength (LP)",
+      "category": "Strength",
+      "duration": "60 min",
+      "calories": "350",
+      "instructor": "Coach TOBA",
+      "difficulty": "Beginner",
+      "videoUrl": "https://www.youtube.com/embed/nUUnfB-1WqM",
+      "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80",
+      "rating": 4.9,
+      "instructions": [
+        "A/B Split alternating 3 days/week.",
+        "Add 2.5kg/5lbs to every lift every session.",
+        "Rest 3-5 minutes between sets to ensure performance.",
+        "Eat for recovery. Linear progression requires surplus."
+      ],
+      "exercises": [
+        {
+          "name": "Low Bar Squat (Workout A/B)",
+          "sets": 3,
+          "reps": "5"
+        },
+        {
+          "name": "Bench Press (A) / Press (B)",
+          "sets": 3,
+          "reps": "5"
+        },
+        {
+          "name": "Deadlift (A) / Clean (B)",
+          "sets": 1,
+          "reps": "5"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "title": "StrongLifts 5x5",
+      "category": "Strength",
+      "duration": "45 min",
+      "calories": "400",
+      "instructor": "Coach TOBA",
+      "difficulty": "Beginner",
+      "videoUrl": "https://www.youtube.com/embed/EP2g3Sj3qSw",
+      "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80",
+      "rating": 4.8,
+      "instructions": [
+        "Workout A: Squat, Bench, Row. Workout B: Squat, OHP, Deadlift.",
+        "5 sets of 5 reps for all except Deadlift (1x5).",
+        "Add weight every successful workout.",
+        "Do not skip the 48-hour recovery window."
+      ],
+      "exercises": [
+        {
+          "name": "Barbell Squat",
+          "sets": 5,
+          "reps": "5"
+        },
+        {
+          "name": "Bench Press / OHP",
+          "sets": 5,
+          "reps": "5"
+        },
+        {
+          "name": "Barbell Row / Deadlift",
+          "sets": 5,
+          "reps": "5"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "title": "5/3/1: The Big Three",
+      "category": "Strength",
+      "duration": "50 min",
+      "calories": "300",
+      "instructor": "Marcus T.",
+      "difficulty": "Intermediate",
+      "videoUrl": "https://www.youtube.com/embed/fDpxdY4N0iU",
+      "image": "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&q=80",
+      "rating": 5,
+      "instructions": [
+        "Calculate your Training Max (90% of 1RM).",
+        "Week 1: 3x5, Week 2: 3x3, Week 3: 5/3/1, Week 4: Deload.",
+        "The final set is 'AMRAP' (As Many Reps As Possible).",
+        "Slow, steady, and sustainable progression."
+      ],
+      "exercises": [
+        {
+          "name": "Main Lift (Squat/Bench/Dead/Press)",
+          "sets": 3,
+          "reps": "5/3/1+"
+        },
+        {
+          "name": "Boring But Big (Accessory)",
+          "sets": 5,
+          "reps": "10"
+        },
+        {
+          "name": "Pull/Push/Leg Assistance",
+          "sets": 3,
+          "reps": "15"
+        }
+      ]
+    }
+  ]
+}

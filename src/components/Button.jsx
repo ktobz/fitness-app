@@ -1,22 +1,51 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
-export default function Button({ children, onClick, variant = "primary", className = "" }) {
-    const baseStyles = "px-6 py-3 rounded-full font-semibold transition-all shadow-lg active:scale-95";
+export default function Button({ children, onClick, href, variant = "primary", className = "", size = "md" }) {
+    const baseStyles = "inline-flex items-center justify-center rounded-2xl font-bold transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none";
+
+    const sizes = {
+        sm: "px-4 py-2 text-sm",
+        md: "px-7 py-3.5 text-base",
+        lg: "px-10 py-5 text-lg"
+    };
 
     const variants = {
-        primary: "bg-gradient-to-r from-primary to-secondary text-white shadow-primary/30 hover:shadow-primary/50",
-        secondary: "bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20",
-        outline: "border-2 border-primary text-primary hover:bg-primary/10"
+        primary: "bg-slate-900 text-white shadow-xl shadow-slate-200 hover:bg-slate-800 hover:-translate-y-0.5",
+        secondary: "bg-white border border-slate-200 text-slate-900 shadow-sm hover:bg-slate-50 hover:-translate-y-0.5",
+        accent: "bg-gradient-to-r from-primary to-secondary text-white shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-0.5",
+        ghost: "bg-transparent text-slate-600 hover:bg-slate-100",
+        outline: "border-2 border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white"
     };
+
+    const content = (
+        <motion.span
+            whileHover={{ scale: 1.02 }}
+            className="flex items-center gap-2"
+        >
+            {children}
+        </motion.span>
+    );
+
+    if (href) {
+        return (
+            <Link
+                to={href}
+                className={`${baseStyles} ${sizes[size]} ${variants[variant]} ${className}`}
+            >
+                {content}
+            </Link>
+        );
+    }
 
     return (
         <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`${baseStyles} ${variants[variant]} ${className}`}
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            className={`${baseStyles} ${sizes[size]} ${variants[variant]} ${className}`}
             onClick={onClick}
         >
-            {children}
+            {content}
         </motion.button>
     );
 }
