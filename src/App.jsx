@@ -32,6 +32,7 @@ export default function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/create-workout" element={<WorkoutCreator />} />
+        <Route path="/edit-workout/:id" element={<WorkoutCreator />} />
         <Route path="/performance-lab" element={<PerformanceLab />} />
         <Route path="/performance-report" element={<PerformanceReport />} />
         <Route path="/workouts" element={<WorkoutLibrary />} />

@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Dumbbell, Plus, Trash2, Save, ArrowLeft, Image as ImageIcon, StickyNote, Activity } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Dumbbell, Plus, Trash2, Save, ArrowLeft, Image as ImageIcon, StickyNote, Activity, CheckCircle } from "lucide-react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Button from "../components/Button";
 
 export default function WorkoutCreator() {
     const navigate = useNavigate();
+    const { id } = useParams();
+    const isEditing = !!id;
+    const [loading, setLoading] = useState(isEditing);
+    const [saved, setSaved] = useState(false);
     const [workout, setWorkout] = useState({
         title: "",
         type: "Strength",
@@ -16,6 +20,26 @@ export default function WorkoutCreator() {
         image: null,
         imagePreview: null
     });
+
+    // Load workout data on mount if editing
+    useEffect(() => {
+        if (isEditing) {
+            fetch(`http://localhost:5000/api/workouts/${id}`)
+                .then(res => res.json())
+                .then(data => {
+                    setWorkout({
+                        ...data,
+                        image: null,
+                        imagePreview: data.imagePreview || null
+                    });
+                    setLoading(false);
+                })
+                .catch(err => {
+                    console.error("Error fetching workout:", err);
+                    setLoading(false);
+                });
+        }
+    }, [id, isEditing]);
 
     const handleImageUpload = (e) => {
         const file = e.target.files?.[0];
@@ -52,23 +76,50 @@ export default function WorkoutCreator() {
     };
 
     const handleSave = () => {
-        const newWorkout = {
+        const workoutData = {
             ...workout,
-            id: Date.now(),
-            date: new Date().toLocaleDateString()
+            date: workout.date || new Date().toLocaleDateString()
         };
 
-        fetch("http://localhost:5000/api/workouts", {
-            method: "POST",
+        const endpoint = isEditing 
+            ? `http://localhost:5000/api/workouts/${id}`
+            : "http://localhost:5000/api/workouts";
+        
+        const method = isEditing ? "PATCH" : "POST";
+
+        fetch(endpoint, {
+            method,
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newWorkout)
+            body: JSON.stringify(workoutData)
         })
-            .then(() => navigate("/dashboard"))
-            .catch(err => console.error("Error saving workout:", err));
+            .then(res => {
+                if (!res.ok) throw new Error("Failed to save");
+                setSaved(true);
+                setTimeout(() => navigate("/dashboard"), 1500);
+            })
+            .catch(err => {
+                console.error("Error saving workout:", err);
+                setSaved(false);
+            });
     };
 
     return (
         <div className="min-h-screen bg-slate-50 pb-20">
+            {/* Success Toast */}
+            <AnimatePresence>
+                {saved && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-emerald-500 text-white px-6 py-4 rounded-xl flex items-center gap-2 font-bold shadow-lg"
+                    >
+                        <CheckCircle size={20} />
+                        {isEditing ? "Workout updated successfully!" : "Workout created successfully!"}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             {/* Header */}
             <header className="bg-white border-b border-slate-200 sticky top-0 z-30">
                 <div className="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -77,15 +128,30 @@ export default function WorkoutCreator() {
                         <span>Back to Dashboard</span>
                     </Link>
                     <div className="flex items-center gap-4">
+                        {isEditing && (
+                            <span className="text-xs font-black uppercase tracking-widest text-primary bg-primary/10 px-3 py-1 rounded-full">
+                                Editing Workout
+                            </span>
+                        )}
                         <Button variant="secondary" size="sm" onClick={() => navigate("/dashboard")}>Cancel</Button>
-                        <Button variant="primary" size="sm" onClick={handleSave}>
-                            <Save size={18} className="mr-2" /> Save Workout
+                        <Button variant="primary" size="sm" onClick={handleSave} disabled={saved || loading}>
+                            <Save size={18} className="mr-2" /> {isEditing ? "Update" : "Save"} Workout
                         </Button>
                     </div>
                 </div>
             </header>
 
-            <main className="container mx-auto px-6 pt-12 max-w-4xl">
+            {loading && (
+                <div className="flex items-center justify-center min-h-screen">
+                    <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ repeat: Infinity, duration: 1 }}
+                        className="w-12 h-12 rounded-full border-4 border-slate-200 border-t-primary"
+                    />
+                </div>
+            )}
+
+            {!loading && (
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -245,6 +311,7 @@ export default function WorkoutCreator() {
                     </div>
                 </motion.div>
             </main>
+            )}
         </div>
     );
 }

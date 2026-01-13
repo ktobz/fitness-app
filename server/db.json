@@ -22,10 +22,29 @@
         }
       ],
       "date": "01/06/2026"
+    },
+    {
+      "title": "",
+      "type": "Strength",
+      "difficulty": "Intermediate",
+      "equipment": "Full Gym",
+      "notes": "",
+      "exercises": [
+        {
+          "name": "",
+          "sets": "",
+          "reps": "",
+          "weight": ""
+        }
+      ],
+      "image": null,
+      "imagePreview": null,
+      "id": 1767957224598,
+      "date": "1/9/2026"
     }
   ],
   "stats": {
-    "totalWorkouts": 1,
+    "totalWorkouts": 2,
     "avgTime": "35m",
     "caloriesBurned": "250"
   },

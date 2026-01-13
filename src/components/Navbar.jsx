@@ -182,30 +182,7 @@ export default function Navbar() {
                 </AnimatePresence>
             </nav>
 
-            {/* Mobile Bottom Navigation (Optional: Hidden if top menu is open) */}
-            {!isOpen && (
-                <nav className="lg:hidden fixed bottom-4 left-4 right-4 z-40 bg-slate-950/95 backdrop-blur-xl rounded-2xl border border-white/10 p-2 shadow-2xl">
-                    <ul className="flex justify-around items-center">
-                        {navItems.map((item) => (
-                            <li key={item.name} className="flex-1">
-                                <Link to={item.href} className="relative flex flex-col items-center justify-center py-3 px-2 group rounded-lg transition-colors hover:bg-white/5">
-                                    <AnimatePresence>
-                                        {(activeSection === item.id && isLanding) && (
-                                            <motion.div
-                                                layoutId="active-pill"
-                                                className="absolute inset-0 bg-white/10 rounded-lg"
-                                                transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                                            />
-                                        )}
-                                    </AnimatePresence>
-                                    <item.icon size={24} className={`relative z-10 transition-colors ${activeSection === item.id && isLanding ? 'text-white' : 'text-slate-400 group-hover:text-slate-200'}`} />
-                                    <span className="text-xs font-bold mt-1 text-slate-400 group-hover:text-slate-200 transition-colors">{item.name.slice(0, 4)}</span>
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
-            )}
+
         </>
     );
 }
