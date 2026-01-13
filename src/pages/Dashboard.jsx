@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Dumbbell, Plus, LayoutDashboard, Calendar, ChevronRight, Activity, Clock, Flame, Pencil } from "lucide-react";
+import { Dumbbell, Plus, LayoutDashboard, Calendar, ChevronRight, Activity, Clock, Flame, Pencil, LogOut } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
+import { useAuth } from "../context/AuthContext";
 
 export default function Dashboard() {
     const navigate = useNavigate();
+    const { signOut, user } = useAuth();
     const [workouts, setWorkouts] = useState([]);
     const [stats, setStats] = useState({
         totalWorkouts: 0,
@@ -14,17 +16,31 @@ export default function Dashboard() {
     });
 
     useEffect(() => {
-        // Fetch Workouts
-        fetch("http://localhost:5000/api/workouts")
-            .then(res => res.json())
-            .then(data => setWorkouts(data))
-            .catch(err => console.error("Error fetching workouts:", err));
+        // Fetch Workouts from local API (optional)
+        const fetchWorkouts = async () => {
+            try {
+                const res = await fetch("http://localhost:5000/api/workouts");
+                const data = await res.json();
+                setWorkouts(data);
+            } catch (err) {
+                console.log("Local API not available, showing empty workouts");
+                setWorkouts([]);
+            }
+        };
 
-        // Fetch Stats
-        fetch("http://localhost:5000/api/stats")
-            .then(res => res.json())
-            .then(data => setStats(prev => ({ ...prev, ...data })))
-            .catch(err => console.error("Error fetching stats:", err));
+        // Fetch Stats from local API (optional)
+        const fetchStats = async () => {
+            try {
+                const res = await fetch("http://localhost:5000/api/stats");
+                const data = await res.json();
+                setStats(prev => ({ ...prev, ...data }));
+            } catch (err) {
+                console.log("Local API not available, using default stats");
+            }
+        };
+
+        fetchWorkouts();
+        fetchStats();
     }, []);
 
     return (
@@ -54,11 +70,16 @@ export default function Dashboard() {
                     <div className="flex items-center gap-3 mb-4">
                         <div className="w-10 h-10 rounded-full bg-slate-200" />
                         <div>
-                            <p className="text-sm font-black text-slate-950">Alex J.</p>
+                            <p className="text-sm font-black text-slate-950">{user?.email?.split('@')[0] || 'User'}</p>
                             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Pro Member</p>
                         </div>
                     </div>
-                    <Button variant="outline" size="sm" className="w-full" href="/">Logout</Button>
+                    <button
+                        onClick={() => signOut()}
+                        className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-2xl border border-slate-200 text-slate-950 font-bold hover:bg-slate-100 transition-all text-sm"
+                    >
+                        <LogOut size={16} /> Logout
+                    </button>
                 </div>
             </aside>
 
