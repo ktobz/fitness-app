@@ -1,9 +1,39 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Dumbbell, ArrowRight, Mail, Lock, Github } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Dumbbell, ArrowRight, Mail, Lock, AlertCircle } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
+    const { signIn, signInWithGoogle } = useAuth();
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError(null);
+        setLoading(true);
+
+        try {
+            const { data, error } = await signIn(email, password);
+
+            if (error) {
+                setError(error.message);
+                setLoading(false);
+            } else if (data?.user) {
+                // Login successful, navigate to dashboard
+                navigate("/dashboard");
+            }
+        } catch (err) {
+            setError(err.message);
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6 relative overflow-hidden">
             {/* Background Decorations */}
@@ -26,15 +56,25 @@ export default function Login() {
                         <p className="text-slate-500 font-medium">Continue your elite fitness journey</p>
                     </div>
 
-                    <form className="space-y-6">
+                    {error && (
+                        <div className="mb-6 bg-rose-50 border border-rose-100 p-4 rounded-xl flex items-center gap-2 text-rose-500 text-sm font-bold">
+                            <AlertCircle size={16} />
+                            {error}
+                        </div>
+                    )}
+
+                    <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="space-y-2">
                             <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Email Address</label>
                             <div className="relative group">
                                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-primary transition-colors" />
                                 <input
                                     type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none font-medium"
                                     placeholder="name@example.com"
+                                    required
                                 />
                             </div>
                         </div>
@@ -48,14 +88,19 @@ export default function Login() {
                                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-primary transition-colors" />
                                 <input
                                     type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none font-medium"
                                     placeholder="••••••••"
+                                    required
                                 />
                             </div>
                         </div>
 
-                        <Button className="w-full py-4 shadow-2xl" variant="primary" size="lg" href="/dashboard">
-                            Sign In <ArrowRight className="ml-2 w-5 h-5" />
+                        <Button className="w-full py-4 shadow-2xl" variant="primary" size="lg" disabled={loading}>
+                            {loading ? "Signing In..." : (
+                                <>Sign In <ArrowRight className="ml-2 w-5 h-5" /></>
+                            )}
                         </Button>
                     </form>
 
@@ -65,7 +110,17 @@ export default function Login() {
                     </div>
 
                     <div className="mt-8">
-                        <button className="w-full flex items-center justify-center gap-2 py-4 border border-slate-200 rounded-2xl hover:bg-slate-50 transition-all font-bold text-slate-900 group shadow-sm">
+                        <button
+                            type="button"
+                            onClick={async () => {
+                                setLoading(true);
+                                const { error } = await signInWithGoogle();
+                                if (error) {
+                                    setError(error.message);
+                                    setLoading(false);
+                                }
+                            }}
+                            className="w-full flex items-center justify-center gap-2 py-4 border border-slate-200 rounded-2xl hover:bg-slate-50 transition-all font-bold text-slate-900 group shadow-sm">
                             <svg className="w-5 h-5 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
                                 <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                                 <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />

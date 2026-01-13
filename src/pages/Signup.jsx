@@ -1,9 +1,42 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Dumbbell, ArrowRight, Mail, Lock, User, Target } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Dumbbell, ArrowRight, Mail, Lock, User, Target, AlertCircle } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
+import { useAuth } from "../context/AuthContext";
 
 export default function Signup() {
+    const { signUp } = useAuth();
+    const navigate = useNavigate();
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError(null);
+        setLoading(true);
+
+        try {
+            // Supabase sign up
+            const { data, error } = await signUp(email, password);
+
+            if (error) {
+                setError(error.message);
+                setLoading(false);
+            } else if (data?.user) {
+                // Sign up successful, user should auto-login
+                // In a real app, you might want to save the 'name' to the user profile table here.
+                navigate("/dashboard");
+            }
+        } catch (err) {
+            setError(err.message);
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6 relative overflow-hidden">
             {/* Background Decorations */}
@@ -58,15 +91,28 @@ export default function Signup() {
                             <h1 className="text-3xl font-black text-slate-950">Join TOBA-FIT</h1>
                         </div>
 
-                        <form className="space-y-6">
+                        {error && (
+                            <div className={`mb-6 border p-4 rounded-xl flex items-center gap-2 text-sm font-bold ${error.includes("Success")
+                                    ? "bg-emerald-50 border-emerald-100 text-emerald-600"
+                                    : "bg-rose-50 border-rose-100 text-rose-500"
+                                }`}>
+                                <AlertCircle size={16} />
+                                {error}
+                            </div>
+                        )}
+
+                        <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="space-y-2">
                                 <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Full Name</label>
                                 <div className="relative group">
                                     <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-primary transition-colors" />
                                     <input
                                         type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
                                         className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none font-medium"
                                         placeholder="Alex Johnson"
+                                        required
                                     />
                                 </div>
                             </div>
@@ -77,8 +123,11 @@ export default function Signup() {
                                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-primary transition-colors" />
                                     <input
                                         type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
                                         className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none font-medium"
                                         placeholder="name@example.com"
+                                        required
                                     />
                                 </div>
                             </div>
@@ -89,14 +138,19 @@ export default function Signup() {
                                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-primary transition-colors" />
                                     <input
                                         type="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
                                         className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none font-medium"
                                         placeholder="Create password"
+                                        required
                                     />
                                 </div>
                             </div>
 
-                            <Button className="w-full py-4 shadow-2xl" variant="primary" size="lg" href="/dashboard">
-                                Create Account <ArrowRight className="ml-2 w-5 h-5" />
+                            <Button className="w-full py-4 shadow-2xl" variant="primary" size="lg" disabled={loading}>
+                                {loading ? "Creating Account..." : (
+                                    <>Create Account <ArrowRight className="ml-2 w-5 h-5" /></>
+                                )}
                             </Button>
                         </form>
 

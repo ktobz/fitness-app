@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Dumbbell, Plus, LayoutDashboard, Calendar, ChevronRight, Activity, Clock, Flame, Edit, Trash2 } from "lucide-react";
+import { Dumbbell, Plus, LayoutDashboard, Calendar, ChevronRight, Activity, Clock, Flame, Pencil } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 
@@ -13,17 +13,19 @@ export default function Dashboard() {
         caloriesBurned: "12.4k"
     });
 
-    const handleDelete = (workoutId) => {
-        if (window.confirm("Are you sure you want to delete this workout?")) {
-            fetch(`http://localhost:5000/api/workouts/${workoutId}`, {
-                method: "DELETE"
-            })
-                .then(() => {
-                    setWorkouts(workouts.filter(w => w.id !== workoutId));
-                })
-                .catch(err => console.error("Error deleting workout:", err));
-        }
-    };
+    useEffect(() => {
+        // Fetch Workouts
+        fetch("http://localhost:5000/api/workouts")
+            .then(res => res.json())
+            .then(data => setWorkouts(data))
+            .catch(err => console.error("Error fetching workouts:", err));
+
+        // Fetch Stats
+        fetch("http://localhost:5000/api/stats")
+            .then(res => res.json())
+            .then(data => setStats(prev => ({ ...prev, ...data })))
+            .catch(err => console.error("Error fetching stats:", err));
+    }, []);
 
     return (
         <div className="min-h-screen bg-slate-50 flex">
@@ -43,9 +45,9 @@ export default function Dashboard() {
                     <Link to="/create-workout" className="flex items-center gap-4 p-4 rounded-2xl text-slate-500 hover:bg-slate-50 hover:text-slate-950 font-bold transition-all group">
                         <Plus size={20} className="group-hover:text-primary" /> Create New
                     </Link>
-                    <a href="#" className="flex items-center gap-4 p-4 rounded-2xl text-slate-500 hover:bg-slate-50 hover:text-slate-950 font-bold transition-all">
+                    <Link to="/schedule" className="flex items-center gap-4 p-4 rounded-2xl text-slate-500 hover:bg-slate-50 hover:text-slate-950 font-bold transition-all">
                         <Calendar size={20} /> Schedule
-                    </a>
+                    </Link>
                 </nav>
 
                 <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 mt-auto">
@@ -105,12 +107,12 @@ export default function Dashboard() {
                                     key={w.id}
                                     initial={{ opacity: 0, x: -20 }}
                                     animate={{ opacity: 1, x: 0 }}
-                                    className="bg-white border border-slate-200 p-6 rounded-[32px] hover:border-primary transition-all group flex flex-col md:flex-row md:items-center gap-6 relative"
+                                    className="bg-white border border-slate-200 p-6 rounded-[32px] hover:border-primary transition-all group flex flex-col md:flex-row md:items-center gap-6 cursor-pointer"
                                 >
                                     <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
                                         <Dumbbell size={24} />
                                     </div>
-                                    <div className="flex-1 cursor-pointer" onClick={() => navigate(`/edit-workout/${w.id}`)}>
+                                    <div className="flex-1">
                                         <h3 className="text-xl font-black text-slate-950">{w.title}</h3>
                                         <div className="flex gap-4 mt-1">
                                             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{w.type}</p>
@@ -125,30 +127,17 @@ export default function Dashboard() {
                                             <p className="text-xs font-black text-slate-950">Active</p>
                                             <p className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">Recorded</p>
                                         </div>
-                                        <div className="flex items-center gap-2">
-                                            <button
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    navigate(`/edit-workout/${w.id}`);
-                                                }}
-                                                className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all"
-                                                title="Edit workout"
-                                            >
-                                                <Edit size={18} />
-                                            </button>
-                                            <button
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    handleDelete(w.id);
-                                                }}
-                                                className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all"
-                                                title="Delete workout"
-                                            >
-                                                <Trash2 size={18} />
-                                            </button>
-                                            <div className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center group-hover:bg-slate-950 group-hover:text-white transition-all">
-                                                <ChevronRight size={20} />
-                                            </div>
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                navigate(`/edit-workout/${w.id}`);
+                                            }}
+                                            className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-950 hover:text-white transition-all"
+                                        >
+                                            <Pencil size={18} />
+                                        </button>
+                                        <div className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center group-hover:bg-slate-950 group-hover:text-white transition-all">
+                                            <ChevronRight size={20} />
                                         </div>
                                     </div>
                                 </motion.div>

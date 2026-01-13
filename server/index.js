@@ -8,7 +8,7 @@ const adapter = new FileSync('db.json');
 const db = low(adapter);
 
 // Set defaults
-db.defaults({ workouts: [], stats: { totalWorkouts: 0, avgTime: "0m", caloriesBurned: "0" } }).write();
+db.defaults({ workouts: [], schedule: [], stats: { totalWorkouts: 0, avgTime: "0m", caloriesBurned: "0" } }).write();
 
 const app = express();
 app.use(cors());
@@ -42,6 +42,36 @@ app.post('/api/workouts', (req, res) => {
     res.status(201).json(workout);
 });
 
+// Get a single workout
+app.get('/api/workouts/:id', (req, res) => {
+    const { id } = req.params;
+    const workout = db.get('workouts')
+        .find({ id: parseInt(id) })
+        .value();
+
+    if (!workout) {
+        return res.status(404).json({ error: "Workout not found" });
+    }
+    res.json(workout);
+});
+
+// Update a workout
+app.patch('/api/workouts/:id', (req, res) => {
+    const { id } = req.params;
+    const changes = req.body;
+
+    db.get('workouts')
+        .find({ id: parseInt(id) })
+        .assign(changes)
+        .write();
+
+    const updatedWorkout = db.get('workouts')
+        .find({ id: parseInt(id) })
+        .value();
+
+    res.json(updatedWorkout);
+});
+
 // Delete a workout
 app.delete('/api/workouts/:id', (req, res) => {
     const { id } = req.params;
@@ -59,6 +89,37 @@ app.delete('/api/workouts/:id', (req, res) => {
 app.get('/api/stats', (req, res) => {
     const stats = db.get('stats').value();
     res.json(stats);
+});
+
+// --- Schedule Routes ---
+
+// Get all schedule events
+app.get('/api/schedule', (req, res) => {
+    const events = db.get('schedule').value();
+    res.json(events);
+});
+
+// Add a schedule event
+app.post('/api/schedule', (req, res) => {
+    const event = { ...req.body, id: Date.now() };
+    db.get('schedule').push(event).write();
+    res.status(201).json(event);
+});
+
+// Update a schedule event
+app.patch('/api/schedule/:id', (req, res) => {
+    const { id } = req.params;
+    const changes = req.body;
+    db.get('schedule').find({ id: parseInt(id) }).assign(changes).write();
+    const updated = db.get('schedule').find({ id: parseInt(id) }).value();
+    res.json(updated);
+});
+
+// Delete a schedule event
+app.delete('/api/schedule/:id', (req, res) => {
+    const { id } = req.params;
+    db.get('schedule').remove({ id: parseInt(id) }).write();
+    res.json({ success: true });
 });
 
 app.listen(PORT, () => {

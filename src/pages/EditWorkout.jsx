@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dumbbell, Plus, Trash2, Save, ArrowLeft, Image as ImageIcon, StickyNote, Activity } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Button from "../components/Button";
 
-export default function WorkoutCreator() {
+export default function EditWorkout() {
     const navigate = useNavigate();
+    const { id } = useParams();
     const [workout, setWorkout] = useState({
         title: "",
         type: "Strength",
@@ -16,6 +17,23 @@ export default function WorkoutCreator() {
         image: null,
         imagePreview: null
     });
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/api/workouts/${id}`)
+            .then(res => {
+                if (!res.ok) throw new Error("Workout not found");
+                return res.json();
+            })
+            .then(data => {
+                setWorkout(data);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error("Error fetching workout:", err);
+                navigate("/dashboard");
+            });
+    }, [id, navigate]);
 
     const handleImageUpload = (e) => {
         const file = e.target.files?.[0];
@@ -51,21 +69,17 @@ export default function WorkoutCreator() {
         setWorkout({ ...workout, exercises: newExercises });
     };
 
-    const handleSave = () => {
-        const newWorkout = {
-            ...workout,
-            id: Date.now(),
-            date: new Date().toLocaleDateString()
-        };
-
-        fetch("http://localhost:5000/api/workouts", {
-            method: "POST",
+    const handleUpdate = () => {
+        fetch(`http://localhost:5000/api/workouts/${id}`, {
+            method: "PATCH",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newWorkout)
+            body: JSON.stringify(workout)
         })
             .then(() => navigate("/dashboard"))
-            .catch(err => console.error("Error saving workout:", err));
+            .catch(err => console.error("Error updating workout:", err));
     };
+
+    if (loading) return <div className="min-h-screen flex items-center justify-center text-slate-400">Loading...</div>;
 
     return (
         <div className="min-h-screen bg-slate-50 pb-20">
@@ -78,8 +92,8 @@ export default function WorkoutCreator() {
                     </Link>
                     <div className="flex items-center gap-4">
                         <Button variant="secondary" size="sm" onClick={() => navigate("/dashboard")}>Cancel</Button>
-                        <Button variant="primary" size="sm" onClick={handleSave}>
-                            <Save size={18} className="mr-2" /> Save Workout
+                        <Button variant="primary" size="sm" onClick={handleUpdate}>
+                            <Save size={18} className="mr-2" /> Update Workout
                         </Button>
                     </div>
                 </div>
@@ -154,8 +168,8 @@ export default function WorkoutCreator() {
                         </div>
 
                         <div className="bg-white border-2 border-dashed border-slate-200 rounded-[32px] p-8 flex flex-col items-center justify-center text-slate-400 hover:border-primary transition-colors cursor-pointer group relative overflow-hidden">
-                            <input 
-                                type="file" 
+                            <input
+                                type="file"
                                 accept="image/*"
                                 onChange={handleImageUpload}
                                 className="absolute inset-0 opacity-0 cursor-pointer"
