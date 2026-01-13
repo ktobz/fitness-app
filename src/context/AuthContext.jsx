@@ -11,74 +11,131 @@ export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Check active sessions and sets the user
-        const checkSession = async () => {
+        // Initialize auth state - check for existing session
+        const initializeAuth = async () => {
             try {
+                // Get current session (persisted by Supabase)
                 const { data: { session } } = await supabase.auth.getSession();
+                console.log('Session restored:', session?.user?.email);
                 setSession(session);
                 setUser(session?.user ?? null);
-                setLoading(false);
             } catch (error) {
-                console.error('Error checking session:', error);
+                console.error('Error initializing auth:', error);
+            } finally {
                 setLoading(false);
             }
         };
 
-        checkSession();
+        initializeAuth();
 
-        // Listen for changes on auth state (logged in, signed out, etc.)
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-            setSession(session);
-            setUser(session?.user ?? null);
-            setLoading(false);
-        });
+        // Set up auth state listener for real-time updates
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(
+            (event, session) => {
+                console.log('Auth state changed:', event, session?.user?.email);
+                setSession(session);
+                setUser(session?.user ?? null);
+                setLoading(false);
+            }
+        );
 
-        return () => subscription?.unsubscribe();
+        return () => {
+            subscription?.unsubscribe();
+        };
     }, []);
 
     const signUp = async (email, password) => {
         try {
-            const response = await supabase.auth.signUp({ email, password });
-            return response;
+            const { data, error } = await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                    emailRedirectTo: `${window.location.origin}/dashboard`,
+                }
+            });
+            
+            if (error) {
+                console.error('Sign up error:', error);
+                return { data, error };
+            }
+            
+            console.log('Sign up successful:', data.user?.email);
+            return { data, error };
         } catch (error) {
-            return { error };
+            console.error('Unexpected sign up error:', error);
+            return { data: null, error };
         }
     };
 
     const signIn = async (email, password) => {
         try {
-            const response = await supabase.auth.signInWithPassword({ email, password });
-            if (!response.error && response.data?.session) {
-                setSession(response.data.session);
-                setUser(response.data.session.user);
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email,
+                password
+            });
+            
+            if (error) {
+                console.error('Sign in error:', error);
+                return { data, error };
             }
-            return response;
+            
+            if (data?.session) {
+                console.log('Sign in successful:', data.user?.email);
+                setSession(data.session);
+                setUser(data.session.user);
+            }
+            
+            return { data, error };
         } catch (error) {
-            return { error };
-        }
-    };
-
-    const signOut = async () => {
-        try {
-            await supabase.auth.signOut();
-            setSession(null);
-            setUser(null);
-            navigate('/');
-        } catch (error) {
-            console.error('Error signing out:', error);
+            console.error('Unexpected sign in error:', error);
+            return { data: null, error };
         }
     };
 
     const signInWithGoogle = async () => {
         try {
-            const response = await supabase.auth.signInWithOAuth({
+            console.log('Starting Google OAuth flow...');
+            
+            const { data, error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: `${window.location.origin}/dashboard`
+                    redirectTo: `${window.location.origin}/auth/callback`,
+                    queryParams: {
+                        access_type: 'offline',
+                        prompt: 'consent',
+                    }
                 }
             });
-            return response;
+            
+            if (error) {
+                console.error('Google sign in error:', error);
+                return { data, error };
+            }
+            
+            console.log('Google sign in initiated');
+            return { data, error };
         } catch (error) {
+            console.error('Unexpected Google sign in error:', error);
+            return { data: null, error };
+        }
+    };
+
+    const signOut = async () => {
+        try {
+            console.log('Signing out...');
+            const { error } = await supabase.auth.signOut();
+            
+            if (error) {
+                console.error('Sign out error:', error);
+                return { error };
+            }
+            
+            setSession(null);
+            setUser(null);
+            navigate('/');
+            console.log('Sign out successful');
+            return { error: null };
+        } catch (error) {
+            console.error('Unexpected sign out error:', error);
             return { error };
         }
     };
@@ -91,10 +148,14 @@ export const AuthProvider = ({ children }) => {
         user,
         session,
         loading,
-        isAuthenticated: !!user
+        isAuthenticated: !!user && !!session
     };
 
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+    return (
+        <AuthContext.Provider value={value}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
 
 export const useAuth = () => {
